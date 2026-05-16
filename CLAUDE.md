@@ -55,14 +55,18 @@ Plugin-dev plugin is enabled in this session — use its skills (`plugin-structu
 5. Data tables → use shadcn-svelte `data-table` (TanStack Table wrapper) over custom grids.
 6. Forms → `Formsnap` integration (already in registry) + `sveltekit-superforms`.
 
-## Commands (intended)
+## Commands
 
-When scaffolding, these slash commands should ship:
-
-- `/svelte-shadcn:add <component>` — wraps `bunx shadcn-svelte@latest add`, verifies `components.json` exists, runs `svelte-autofixer` on the resulting files.
-- `/svelte-shadcn:init` — runs the shadcn-svelte init flow in current SvelteKit project, sets sensible defaults (slate base, CSS vars, Tailwind v4).
-- `/svelte-shadcn:page <name>` — generates a SvelteKit route with `+page.svelte` + `+page.server.ts` scaffold using shadcn-svelte primitives.
-- `/svelte-shadcn:form <schema>` — Formsnap + superforms scaffold against a Zod schema.
+- `/svelte-shadcn:init` — `shadcn-svelte init` with sensible defaults + post-install deps check.
+- `/svelte-shadcn:add <component>...` — wraps `add`, validates unknown names against `llms.txt`, runs autofixer.
+- `/svelte-shadcn:block <name>` — installs composed blocks (dashboard, sidebar, login, signup, otp, calendar variants).
+- `/svelte-shadcn:remove <component>...` — usage check + delete.
+- `/svelte-shadcn:update <component>... | --all` — re-add with `--overwrite` to sync upstream, surface diffs.
+- `/svelte-shadcn:theme <preset|custom>` — applies one of slate / gray / zinc / neutral / stone, or custom HSL via picker.
+- `/svelte-shadcn:page <route> [primitives...]` — scaffolds a SvelteKit route. Delegates `+page.svelte` write to `svelte:svelte-file-editor`.
+- `/svelte-shadcn:form <route> <schema>` — Formsnap + sveltekit-superforms + Zod scaffold.
+- `/svelte-shadcn:data-table <model> <route>` — TanStack Table columns + wrapper + route wiring.
+- `/svelte-shadcn:audit` — scans for Svelte 4 syntax, raw `bits-ui` imports, hand-rolled primitives, missing deps, wrong Tailwind version, non-Bun lockfiles. Read-only.
 
 ## Agent
 

@@ -43,7 +43,17 @@ Agent routing:
 - Svelte syntax/best-practice lookup → svelte:svelte-core-bestpractices skill or
   mcp__plugin_svelte_svelte__{list-sections,get-documentation}.
 
-Available commands: /svelte-shadcn:init /svelte-shadcn:add /svelte-shadcn:page /svelte-shadcn:form
+Available commands:
+  /svelte-shadcn:init        — initialise shadcn-svelte in current project
+  /svelte-shadcn:add         — install primitive(s)
+  /svelte-shadcn:block       — install a composed block (dashboard-01, sidebar-07, …)
+  /svelte-shadcn:remove      — remove a primitive (with usage check)
+  /svelte-shadcn:update      — re-install with --overwrite (upstream sync)
+  /svelte-shadcn:theme       — apply preset palette or custom theme vars
+  /svelte-shadcn:page        — scaffold SvelteKit route
+  /svelte-shadcn:form        — scaffold Formsnap + superforms + Zod form
+  /svelte-shadcn:data-table  — scaffold TanStack data-table for a model
+  /svelte-shadcn:audit       — scan for stack-rule violations
 EOF
 
 if [[ $has_shadcn -eq 0 ]]; then

@@ -6,11 +6,17 @@ Claude Code plugin that biases Svelte / SvelteKit development toward [shadcn-sve
 
 - **Skill** — teaches Claude when and how to install shadcn-svelte primitives instead of hand-rolling UI.
 - **Agent** — `svelte-shadcn-builder` (sonnet) — invoked automatically for Svelte UI work.
-- **Commands** — slash commands wrap the `shadcn-svelte` CLI:
-  - `/svelte-shadcn:init` — `shadcn-svelte init` with sensible defaults.
-  - `/svelte-shadcn:add <component>...` — install primitives + autofix.
+- **Commands** — slash commands wrap the `shadcn-svelte` CLI and add project-local tooling:
+  - `/svelte-shadcn:init` — `shadcn-svelte init` with sensible defaults + deps sanity check.
+  - `/svelte-shadcn:add <component>...` — install primitives + autofix. Validates names against the registry `llms.txt` for unknowns.
+  - `/svelte-shadcn:block <name>` — install a composed block (`dashboard-01`, `sidebar-07`, `login-03`, …).
+  - `/svelte-shadcn:remove <component>...` — usage check, prompt, delete `ui/<name>/`.
+  - `/svelte-shadcn:update <component>... | --all` — re-install with `--overwrite` to sync upstream.
+  - `/svelte-shadcn:theme <preset|custom>` — apply slate / gray / zinc / neutral / stone, or custom HSL.
   - `/svelte-shadcn:page <route> [primitives...]` — scaffold a SvelteKit route.
   - `/svelte-shadcn:form <route> <schema>` — Formsnap + superforms + Zod scaffold.
+  - `/svelte-shadcn:data-table <model> <route>` — TanStack data-table + columns + route wiring.
+  - `/svelte-shadcn:audit` — scan project for Svelte 4 syntax, raw `bits-ui` imports, hand-rolled primitives, missing deps, wrong Tailwind version, non-Bun lockfiles.
 - **Hook** — `SessionStart` detects Svelte projects and reminds Claude of the stack rules.
 
 ## Install
@@ -61,7 +67,7 @@ Without the `svelte` plugin enabled, the agent falls back to the `svelte-code-wr
 ```
 .claude-plugin/plugin.json
 agents/svelte-shadcn-builder.md
-commands/{init,add,page,form}.md
+commands/{init,add,block,remove,update,theme,page,form,data-table,audit}.md
 hooks/hooks.json
 hooks/scripts/session-start.sh
 skills/shadcn-svelte-usage/SKILL.md

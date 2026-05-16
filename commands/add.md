@@ -7,18 +7,21 @@ Install shadcn-svelte components into the current SvelteKit project.
 
 ## Arguments
 
-`$ARGUMENTS` — space-separated list of component names from the shadcn-svelte registry (e.g. `button dialog form input label`).
+`$ARGUMENTS` — space-separated list of component names from the shadcn-svelte registry (e.g. `button dialog form input label`). Block names (`dashboard-01`, `sidebar-07`, …) work too — use `/svelte-shadcn:block` for the curated path.
 
 ## Steps
 
 1. Verify `components.json` exists at the repo root. If missing, tell the user to run `/svelte-shadcn:init` first and stop.
-2. Run:
+2. **Unknown component check** — for any name not in the skill's inventory (`shadcn-svelte-usage` SKILL.md), fetch `https://www.shadcn-svelte.com/llms.txt` via WebFetch and confirm the name exists in the registry. If it doesn't:
+   - Suggest the closest matches (Levenshtein over registry names).
+   - Stop and ask the user to confirm before running `add`.
+3. Run:
    ```bash
    bunx shadcn-svelte@latest add $ARGUMENTS
    ```
-3. List the files written under `$lib/components/ui/`.
-4. For each `.svelte` / `.svelte.ts` file written, run `mcp__plugin_svelte_svelte__svelte-autofixer` to verify. If issues found, dispatch the `svelte:svelte-file-editor` agent to fix them (it auto-loops with bestpractices + autofixer).
-5. Report:
+4. List the files written under `$lib/components/ui/`.
+5. For each `.svelte` / `.svelte.ts` file written, run `mcp__plugin_svelte_svelte__svelte-autofixer` to verify. If issues found, dispatch the `svelte:svelte-file-editor` agent to fix them (it auto-loops with bestpractices + autofixer).
+6. Report:
    - Components installed
    - Path under `$lib/components/ui/`
    - Autofixer findings (or "clean")
