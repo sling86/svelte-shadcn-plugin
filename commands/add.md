@@ -12,9 +12,13 @@ Install shadcn-svelte components into the current SvelteKit project.
 ## Steps
 
 1. Verify `components.json` exists at the repo root. If missing, tell the user to run `/svelte-shadcn:init` first and stop.
-2. **Unknown component check** — for any name not in the skill's inventory (`shadcn-svelte-usage` SKILL.md), fetch `https://www.shadcn-svelte.com/llms.txt` via WebFetch and confirm the name exists in the registry. If it doesn't:
-   - Suggest the closest matches (Levenshtein over registry names).
+2. **Unknown component check** — for any name not in the skill's inventory (`shadcn-svelte-usage` SKILL.md):
+   - WebFetch `https://www.shadcn-svelte.com/llms.txt`.
+   - Extract the registry's component names from the markdown — grep for headings and `bunx shadcn-svelte@latest add <name>` patterns inside the response, then dedupe.
+   - If the user-supplied name appears in that set → proceed.
+   - If not → score the registry set against the supplied name (Levenshtein) and surface the top 3 candidates.
    - Stop and ask the user to confirm before running `add`.
+   - If WebFetch fails (network, 404), proceed with `add` and let the CLI surface the error — do not block.
 3. Run:
    ```bash
    bunx shadcn-svelte@latest add $ARGUMENTS

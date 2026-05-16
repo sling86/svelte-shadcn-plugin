@@ -18,6 +18,8 @@ Scaffold a form using Formsnap + sveltekit-superforms + Zod.
 - `SCHEMA_PASCAL` — PascalCase of the same (e.g. `User`).
 - `ROUTE` — replace with the `route-path` argument.
 
+> **Substitution rule** — replace every `SCHEMA`, `SCHEMA_PASCAL`, `ROUTE` token with the resolved values **before** writing any file. Never emit the literal tokens — TypeScript will fail to compile and the route path will be wrong.
+
 ## Steps
 
 1. Verify `components.json` exists. If not, run `/svelte-shadcn:init` and stop.

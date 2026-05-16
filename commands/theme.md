@@ -17,8 +17,9 @@ Apply or customise the shadcn-svelte theme. Updates the CSS variables in the pro
 1. Verify `components.json` exists. Read `tailwind.css` (or equivalent CSS path) from it.
 2. Read the current CSS file. Locate the existing `:root { --background: ... }` + `.dark { ... }` blocks (or `@theme` block in Tailwind v4 CSS-first config).
 3. **Preset path** (`slate`/`gray`/`zinc`/`neutral`/`stone`):
-   - Fetch the preset's HSL values from the shadcn-svelte registry (`https://www.shadcn-svelte.com/registry/themes.json`) or inline a known-good copy from the docs.
-   - Replace `--background`, `--foreground`, `--primary`, `--primary-foreground`, `--secondary`, `--secondary-foreground`, `--accent`, `--accent-foreground`, `--muted`, `--muted-foreground`, `--destructive`, `--destructive-foreground`, `--border`, `--input`, `--ring`, `--chart-1` through `--chart-5`, `--sidebar` set. Update both light and `.dark` blocks.
+   - **Use inlined known-good HSL values from the shadcn-svelte docs first** (preserved in this command's reference table below or in the skill). Do not depend on a remote fetch.
+   - *Optionally* WebFetch `https://www.shadcn-svelte.com/docs/theming` to confirm the values are still current. If the fetch fails (404, network error, page restructured), **proceed with inlined values — do not abort**. Log the fetch failure as a warning in the report.
+   - Replace `--background`, `--foreground`, `--primary`, `--primary-foreground`, `--secondary`, `--secondary-foreground`, `--accent`, `--accent-foreground`, `--muted`, `--muted-foreground`, `--destructive`, `--destructive-foreground`, `--border`, `--input`, `--ring`, `--chart-1` through `--chart-5`, and the `--sidebar*` set (`--sidebar`, `--sidebar-foreground`, `--sidebar-primary`, `--sidebar-primary-foreground`, `--sidebar-accent`, `--sidebar-accent-foreground`, `--sidebar-border`, `--sidebar-ring`). Update both light and `.dark` blocks.
 4. **Custom path**:
    - Use AskUserQuestion to collect:
      - Primary HSL or hex
