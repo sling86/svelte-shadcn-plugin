@@ -10,10 +10,12 @@ Bias every Svelte/SvelteKit UI task toward the shadcn-svelte registry. Hand-roll
 ## Heuristic
 
 1. **Check registry first** — `https://www.shadcn-svelte.com/llms.txt` enumerates every component. If a primitive matches the user's request, install it.
-2. **Install via CLI**:
+2. **Install via CLI** (preferred — sidesteps a `bunx` cache bug on Windows + Bun with shadcn-svelte's `esrap`/`@jridgewell/sourcemap-codec` deps):
    ```bash
-   bunx shadcn-svelte@latest add <component>
+   bun add -D shadcn-svelte
+   bun x shadcn-svelte add <component> --yes
    ```
+   `bunx shadcn-svelte@latest add <component>` works on most setups but currently throws `Cannot find package '@jridgewell/sourcemap-codec'` on Bun + Windows. Local install + `bun x` works everywhere.
 3. **Compose** — primitives drop into `$lib/components/ui/<component>/`. Re-export aggregated index from `$lib/components/ui/<component>/index.ts` (CLI does this).
 4. **Extend, don't fork** — wrap shadcn-svelte components in `$lib/components/<feature>/` with project-specific props rather than editing the generated files.
 5. **Hand-roll only** when no registry match (bespoke charts beyond shadcn-svelte chart, business-specific composites).
@@ -21,20 +23,22 @@ Bias every Svelte/SvelteKit UI task toward the shadcn-svelte registry. Hand-roll
 ## Init in fresh SvelteKit project
 
 ```bash
-bun create svelte@latest my-app   # or: bunx sv create my-app
+bunx sv create my-app --template minimal --types ts --add tailwindcss="plugins:none" --install bun
 cd my-app
-bun install
-bunx shadcn-svelte@latest init
+bun add -D shadcn-svelte
+bun x shadcn-svelte init
 ```
 
-Init flow asks for:
-- Base colour (default: `slate`)
-- CSS path (default: `src/app.css`)
-- Tailwind config — v4 uses CSS-first config, no `tailwind.config.js` required.
-- Component path (default: `$lib/components/ui`)
-- Utility path (default: `$lib/utils`)
+Init flow (v1.2.7+):
+- **Preset** — interactive picker. Required, no flag for non-interactive selection. `vega` is the canonical default.
+- **Base colour** — one of: `neutral`, `stone`, `zinc`, `mauve`, `olive`, `mist`, `taupe`. *(Legacy `slate` / `gray` are removed in v1.2+.)*
+- **CSS path** — usually `src/app.css`. If the project was scaffolded via `sv create` + the `tailwindcss` add-on, the CSS file is at `src/routes/layout.css` — point init at that path.
+- **Aliases** — `components` / `ui` / `lib` / `utils` / `hooks` (defaults are `$lib/...`).
+- **TypeScript** — yes.
 
-Result: writes `components.json`, seeds Tailwind v4 CSS variables, installs `clsx`, `tailwind-merge`, `tailwind-variants`, `bits-ui`.
+Result: writes `components.json`, `src/lib/utils.ts` (with `cn` + `WithElementRef` / `WithoutChildren*` type helpers), seeds Tailwind v4 CSS variables in the chosen CSS file, installs `clsx`, `tailwind-merge`, `tailwind-variants`, `bits-ui`, `@lucide/svelte`, `tw-animate-css`.
+
+**Don't skip init** — components installed without `src/lib/utils.ts` will fail `svelte-check` because shadcn-svelte primitives import `cn`, `WithElementRef`, `WithoutChildren*` from that file.
 
 ## Component inventory (categories)
 

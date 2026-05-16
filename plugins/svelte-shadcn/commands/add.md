@@ -21,8 +21,10 @@ Install shadcn-svelte components into the current SvelteKit project.
    - If WebFetch fails (network, 404), proceed with `add` and let the CLI surface the error — do not block.
 3. Run:
    ```bash
-   bunx shadcn-svelte@latest add $ARGUMENTS
+   # Preferred — sidesteps the bunx cache bug
+   bun x shadcn-svelte add $ARGUMENTS --yes
    ```
+   If `shadcn-svelte` is not a local devDep yet, run `bun add -D shadcn-svelte` first. `--yes` skips the install-confirmation prompt. Add `--overwrite` only if the user explicitly asked to refresh existing files.
 4. List the files written under `$lib/components/ui/`.
 5. For each `.svelte` / `.svelte.ts` file written, run `mcp__plugin_svelte_svelte__svelte-autofixer` to verify. If issues found, dispatch the `svelte:svelte-file-editor` agent to fix them (it auto-loops with bestpractices + autofixer).
 6. Report:

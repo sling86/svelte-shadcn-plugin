@@ -31,14 +31,16 @@ Plugin-dev plugin is enabled in this session — use its skills (`plugin-structu
 
 ## Core behavioural rules this plugin must encode
 
-- **shadcn-svelte first**. Any UI primitive that exists in the shadcn-svelte registry must be installed via the CLI rather than hand-rolled. Install command:
+- **shadcn-svelte first**. Any UI primitive that exists in the shadcn-svelte registry must be installed via the CLI rather than hand-rolled. Preferred install path (sidesteps a `bunx` cache bug on Windows + Bun):
   ```bash
-  bunx shadcn-svelte@latest add <component>
+  bun add -D shadcn-svelte
+  bun x shadcn-svelte add <component> --yes
   ```
-  Init in a fresh SvelteKit repo:
+  Init in a fresh SvelteKit repo (the preset prompt is interactive in v1.2+ — Claude answers it in-session):
   ```bash
-  bunx shadcn-svelte@latest init
+  bun x shadcn-svelte init --base-color neutral --css <css-path>
   ```
+  Valid base colours: `neutral`, `stone`, `zinc`, `mauve`, `olive`, `mist`, `taupe` (legacy `slate` / `gray` removed in v1.2).
 - **Svelte 5 runes only** (`$state`, `$derived`, `$effect`, `$props`, `$bindable`). No Svelte 4 syntax (`export let`, `$:`, stores-as-default).
 - **Bun** for install/run/test. Never npm/yarn/pnpm.
 - **Tailwind v4** with CSS variables for theming. `components.json` declares `tailwind.css` path + base colour.

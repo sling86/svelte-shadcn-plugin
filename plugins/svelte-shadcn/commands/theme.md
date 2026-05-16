@@ -1,16 +1,18 @@
 ---
-description: Apply a shadcn-svelte base theme (slate, gray, zinc, neutral, stone) or define a custom palette — writes CSS variables to the project's app.css
-argument-hint: <preset> | custom
+description: Apply a shadcn-svelte base colour (neutral, stone, zinc, mauve, olive, mist, taupe) or define a custom palette — writes CSS variables to the project's global stylesheet
+argument-hint: <base-colour> | custom
 ---
 
-Apply or customise the shadcn-svelte theme. Updates the CSS variables in the project's global stylesheet (path read from `components.json`).
+Apply or customise the shadcn-svelte base colour. Updates the CSS variables in the project's global stylesheet (path read from `components.json` → `tailwind.css`).
 
 ## Arguments
 
 `$ARGUMENTS` — one of:
 
-- `slate` · `gray` · `zinc` · `neutral` · `stone` — built-in presets
+- `neutral` · `stone` · `zinc` · `mauve` · `olive` · `mist` · `taupe` — built-in base colours (v1.2+ CLI; legacy `slate` / `gray` removed)
 - `custom` — interactive picker (AskUserQuestion) for primary, accent, radius
+
+Note: shadcn-svelte v1.2+ separates **base colour** (the seven above) from **preset / design system** (e.g. `vega`). This command swaps the base colour palette only. To change preset entirely, re-run `/svelte-shadcn:init`.
 
 ## Steps
 
