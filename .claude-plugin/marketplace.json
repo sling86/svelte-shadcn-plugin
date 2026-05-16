@@ -1,0 +1,13 @@
+{
+  "name": "svelte-shadcn",
+  "owner": {
+    "name": "Tony Malins"
+  },
+  "plugins": [
+    {
+      "name": "svelte-shadcn",
+      "source": "./plugins/svelte-shadcn",
+      "description": "Svelte 5 + SvelteKit development biased toward shadcn-svelte components, Bun, Tailwind v4, TypeScript strict"
+    }
+  ]
+}

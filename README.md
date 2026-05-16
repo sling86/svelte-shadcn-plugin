@@ -22,15 +22,19 @@ Claude Code plugin that biases Svelte / SvelteKit development toward [shadcn-sve
 ## Install
 
 ```
-/plugin install svelte-shadcn          # from a marketplace, once published
-```
-
-Or local:
-
-```
-/plugin                                # add this folder as a local plugin
+/plugin marketplace add sling86/svelte-shadcn-plugin
+/plugin install svelte-shadcn
 /reload-plugins
 ```
+
+Or from a local clone:
+
+```
+/plugin marketplace add <path-to-clone>
+/plugin install svelte-shadcn
+```
+
+The repo doubles as a single-plugin marketplace — `.claude-plugin/marketplace.json` at the root references `plugins/svelte-shadcn`.
 
 ## Conventions enforced
 
@@ -65,12 +69,14 @@ Without the `svelte` plugin enabled, the agent falls back to the `svelte-code-wr
 ## Structure
 
 ```
-.claude-plugin/plugin.json
-agents/svelte-shadcn-builder.md
-commands/{init,add,block,remove,update,theme,page,form,data-table,audit}.md
-hooks/hooks.json
-hooks/scripts/session-start.sh
-skills/shadcn-svelte-usage/SKILL.md
+.claude-plugin/marketplace.json
+plugins/svelte-shadcn/
+├── .claude-plugin/plugin.json
+├── agents/svelte-shadcn-builder.md
+├── commands/{init,add,block,remove,update,theme,page,form,data-table,audit}.md
+├── hooks/hooks.json
+├── hooks/scripts/session-start.sh
+└── skills/shadcn-svelte-usage/SKILL.md
 ```
 
 ## Development
