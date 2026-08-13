@@ -1,6 +1,6 @@
 {
   "name": "svelte-shadcn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte 5 + SvelteKit development biased toward shadcn-svelte components, Bun, Tailwind v4, TypeScript strict",
   "author": {
     "name": "Tony Malins"
